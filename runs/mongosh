@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+curl -o ./mongosh.deb https://downloads.mongodb.com/compass/mongodb-mongosh_2.5.3_amd64.deb
+
+sudo apt install ./mongosh.deb
+
+rm -rf ./mongosh.deb
