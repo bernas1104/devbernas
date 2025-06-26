@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
-filter="$1"
+script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") &> /dev/null && pwd)
+filter=""
 dry="0"
 
 while [[ $# > 0 ]]; do
@@ -42,5 +42,5 @@ for script in $scripts; do
 		continue
 	fi
 
-	execute ./$script
+	execute $script
 done

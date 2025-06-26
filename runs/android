@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+wget -O android-studio.tar.gz https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2024.3.2.15/android-studio-2024.3.2.15-linux.tar.gz
+
+sudo apt install libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 libbz2-1.0:i386 -y
+
+tar -xvzf android-studio.tar.gz -C ~/
+rm android-studio.tar.gz
+
+cd ~/android-studio/bin
+
+sh studio.sh
+
+script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") &> /dev/null && pwd)
+
+cd ../$script_dir
+
+sudo apt install cpu-checker -y
+
+cpu_checker=$(egrep -c '(vmx|svm)' /proc/cpuinfo)
+# echo "$cpu_checker"
+
+kvm_ok="0"
+if sudo kvm-ok | grep -q -F "KVM acceleration can be used"; then
+	kvm_ok="1"
+fi
+# echo "$kvm_ok"
+
+if [[ "$cpu_checker" -gt 0 && "kvm_ok" -gt 0 ]]; then
+	sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+fi
