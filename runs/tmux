@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+sudo apt install tmux -y
+
+curl -LO "https://download.opensuse.org/repositories/home:/clayrisser:/bullseye/Debian_11/amd64/ghostty_1.0.0-1~13.gbp9c580a_amd64.deb"
+sudo apt install ./ghostty_1.0.0-1~13.gbp9c580a_amd64.deb
+
+rm ./ghostty_1.0.0-1~13.gbp9c580a_amd64.deb
