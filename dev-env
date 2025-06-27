@@ -52,15 +52,12 @@ copy_file() {
     	execute cp $from $to/$name
 }
 
-#copy_dir .config $XDG_CONFIG_HOME
-#copy_dir .oh-my-zsh $HOME/.oh-my-zsh
+copy_dir .config $XDG_CONFIG_HOME
 
-#execute mkdir -p $HOME/.local/share/fonts
-#copy_dir .fonts $HOME/.local/share/fonts
-#execute fc-cache -f -v
+execute mkdir -p $HOME/.local/share/fonts
+copy_dir .fonts $HOME/.local/share/fonts
+execute fc-cache -f -v
 
-#copy_file .profile $HOME
-#copy_file .zshenv $HOME
-#copy_file .zshrc $HOME
-
-copy_file .foo $HOME
+copy_file .profile $HOME
+copy_file .zshenv $HOME
+copy_file .zshrc $HOME
