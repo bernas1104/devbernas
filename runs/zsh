@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
-sudo apt install zsh -y
+#sudo apt install zsh dconf-cli -y
 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+wget -O firacode.zip "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip"
+echo $(pwd)
+
+unzip firacode.zip -d .fonts/fira-code
+fonts=$(find ./
+#cp ./firacode/ttf/FiraCode* ~/.local/share/fonts
+
+#git clone https://github.com/dracula/gnome-terminal ~/gnome-terminal
+#cd ~/gnome-terminal
+
+#sh install.sh
