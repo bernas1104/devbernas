@@ -10,3 +10,5 @@ git config --global credential.credentialStore gpg
 pass init "Bernardo Costa Nascimento <bernardoc1104@gmail.com>"
 
 gpg --gen-key
+
+git credential-manager configure

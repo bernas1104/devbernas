@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-git clone -b v0.11.2 https://github.com/neovim/neovim.git $HOME/personal/neovim
-sudo apt install ninja-build gettext cmake curl build-essential lua5.1 liblua5.1-0-dev -y
+git clone -b v0.11.2 https://github.com/neovim/neovim.git $HOME/neovim
+sudo apt install ninja-build gettext cmake curl build-essential lua5.1 liblua5.1-0-dev fonts-noto-color-emoji -y
 
-cd $HOME/personal/neovim
+cd $HOME/neovim
 make CMAKE_BUILD_TYPE=RelWithDebInfo
 sudo make install
+
+git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
