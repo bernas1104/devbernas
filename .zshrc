@@ -154,3 +154,9 @@ zinit light-mode for \
 zinit light zdharma/fast-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+	tmux new-session -s default
+fi
