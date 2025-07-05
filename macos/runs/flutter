@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+wget -O flutter.zip https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.32.5-stable.zip
+
+unzip ./flutter.zip -d ~/
+rm ./flutter.zip
+
+echo 'export PATH="$HOME/flutter/bin:$PATH"' >> ~/.zshenv
+
+source ~/.zshenv
+
+flutter doctor --android-licenses
+
+flutter doctor

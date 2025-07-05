@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+softwareupdate --install-rosetta
+
+wget https://desktop.docker.com/mac/main/arm64/198352/Docker.dmg?_gl=1*w7mskg*_gcl_au*MjE0MzI1MTA0OC4xNzUxNzE3Njk3*_ga*MTEyMzE1MzAzNS4xNzE3MjQ4NzMx*_ga_XJWPQMJYHQ*czE3NTE3MTc2OTckbzE4JGcxJHQxNzUxNzE3ODY4JGo1OSRsMCRoMA..
+
+sudo hdiutil attach Docker.dmg
+sudo /Volumes/Docker/Docker.app/Contents/MacOS/install
+sudo hdiutil detach /Volumes/Docker
+
+rm Docker.dmg

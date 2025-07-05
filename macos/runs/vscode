@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+wget -O vscode.zip "https://code.visualstudio.com/sha/download?build=stable&os=darwin-universal"
+
+unzip vscode.zip -d ./
+sudo mv Visual\ Studio\ Code.app /Applications
+
+rm -rf vscode.zip

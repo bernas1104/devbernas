@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+xcode-select --install
+
+wget -O android-studio.dmg https://redirector.gvt1.com/edgedl/android/studio/install/2024.3.2.15/android-studio-2024.3.2.15-mac_arm.dmg
+
+hdiutil attach android-studio.dmg
+sudo cp -r /Volumes/Android\ Studio\ -\ Meerkat\ Feature\ Drop\ \|\ 2024.3.2\ Patch\ 1/Android\ Studio.app /Applications
+hdiutil detach /Volumes/Android\ Studio\ -\ Meerkat\ Feature\ Drop\ \|\ 2024.3.2\ Patch\ 1/
+
+rm android-studio.dmg

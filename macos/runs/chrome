@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+wget https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg
+
+hdiutil attach googlechrome.dmg
+sudo cp -r /Volumes/Google\ Chrome /Applications
+hdiutil detach /Volumes/Google\ Chrome
+
+rm googlechrome.dmg

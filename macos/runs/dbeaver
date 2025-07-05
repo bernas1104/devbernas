@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+wget -O dbeaver.dmg https://dbeaver.io/files/dbeaver-ce-latest-macos-aarch64.dmg
+
+hdiutil attach dbeaver.dmg
+sudo cp -r /Volumes/DBeaver\ Community /Applications
+hdiutil detach /Volumes/DBeaver\ Community
+
+rm dbeaver.dmg

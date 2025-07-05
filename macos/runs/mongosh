@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+brew install mongosh
+
+wget -O mongoui.dmg https://downloads.mongodb.com/compass/mongodb-compass-1.46.5-darwin-arm64.dmg
+
+hdiutil attach mongoui.dmg
+sudo cp -r /Volumes/MongoDB\ Compass /Applications
+hdiutil detach /Volumes/MongoDB\ Compass
+
+rm mongoui.dmg
