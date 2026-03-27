@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+sudo add-apt-repository ppa:bartbes/love-stable
+
+sudo apt install love
