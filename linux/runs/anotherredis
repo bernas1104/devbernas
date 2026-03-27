@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+sudo apt install snapd
+
+snap install another-redis-desktop-manager
