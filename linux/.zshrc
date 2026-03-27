@@ -160,3 +160,5 @@ zinit light zsh-users/zsh-completions
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
 	tmux new-session -s default
 fi
+
+export PATH="$PATH:/usr/local/go/bin"
