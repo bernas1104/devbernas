@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "=== Starting Development Environment Update ==="
+
+# 1. Update Node.js to LTS using nvm
+echo ""
+echo "=== Updating Node.js (LTS) ==="
+if command -v nvm &> /dev/null || [ -s "$HOME/.nvm/nvm.sh" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    
+    echo "Installing/updating to Node.js LTS..."
+    nvm install --lts
+    nvm use --lts
+    nvm alias default 'lts/*'
+    
+    echo "Updating npm to latest..."
+    npm install -g npm
+    
+    echo "Node.js version: $(node --version)"
+    echo "npm version: $(npm --version)"
+else
+    echo "nvm not found. Installing nvm first..."
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    nvm install --lts
+    nvm use --lts
+    npm install -g npm
+fi
+
+# 2. Update Go
+echo ""
+echo "=== Checking/Updating Go ==="
+GO_LATEST=$(curl -s https://go.dev/VERSION?m=text | head -n 1)
+GO_CURRENT=$(go version 2>/dev/null | awk '{print $3}' || echo "none")
+
+if [ "$GO_CURRENT" != "$GO_LATEST" ]; then
+    echo "Updating Go from $GO_CURRENT to $GO_LATEST..."
+    GO_VERSION=$(echo $GO_LATEST | sed 's/^go//')
+    GO_ARCH="linux-amd64"
+    
+    wget "https://go.dev/dl/${GO_LATEST}.${GO_ARCH}.tar.gz" -O go.tar.gz
+    sudo rm -rf /usr/local/go
+    sudo tar -C /usr/local -xzf go.tar.gz
+    rm go.tar.gz
+    
+    if [[ "$PATH" != *"/usr/local/go/bin" ]]; then
+        export PATH=$PATH:/usr/local/go/bin
+    fi
+    
+    echo "Go updated to: $(go version)"
+else
+    echo "Go is already at the latest version: $GO_CURRENT"
+fi
+
+# 3. Update Flutter
+echo ""
+echo "=== Checking/Updating Flutter ==="
+if command -v flutter &> /dev/null; then
+    echo "Running flutter doctor..."
+    flutter doctor || true
+    
+    echo "Checking for Flutter updates..."
+    flutter upgrade
+    
+    echo "Flutter version: $(flutter --version | head -n 1)"
+else
+    echo "Flutter not found in PATH. Please install Flutter first."
+fi
+
+# 4. Update RVM and Ruby
+echo ""
+echo "=== Updating RVM and Ruby ==="
+if command -v rvm &> /dev/null || [ -s "$HOME/.rvm/scripts/rvm" ]; then
+    source "$HOME/.rvm/scripts/rvm" 2>/dev/null || true
+    
+    echo "Updating RVM..."
+    rvm get stable
+    
+    echo "Installing/updating to latest Ruby LTS (3.4.x)..."
+    rvm install 3.4 --latest
+    rvm use 3.4 --default
+    
+    echo "Ruby version: $(ruby --version)"
+    echo "RVM version: $(rvm --version | head -n 1)"
+else
+    echo "RVM not found. Installing RVM..."
+    sudo apt install gnupg2 -y
+    gpg2 --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+    curl -sSL https://get.rvm.io | bash -s stable
+    source "$HOME/.rvm/scripts/rvm"
+    rvm install 3.4
+    rvm use 3.4 --default
+fi
+
+# 5. Update .NET SDK
+echo ""
+echo "=== Updating .NET SDK ==="
+
+# Get the latest .NET 8.0 SDK version
+DOTNET_LATEST=$(curl -s https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/8.0/releases.json | grep -o '"latest-sdk": "[^"]*"' | head -n 1 | cut -d'"' -f4)
+DOTNET_CURRENT=$(dotnet --version 2>/dev/null || echo "none")
+
+if [ "$DOTNET_CURRENT" != "$DOTNET_LATEST" ]; then
+    echo "Updating .NET SDK from $DOTNET_CURRENT to $DOTNET_LATEST..."
+    
+    # Remove old package source if exists
+    sudo rm -f packages-microsoft-prod.deb
+    
+    # Add Microsoft package repository
+    wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+    sudo dpkg -i packages-microsoft-prod.deb
+    rm packages-microsoft-prod.deb
+    
+    sudo apt update
+    sudo apt install -y dotnet-sdk-8.0
+    
+    echo ".NET SDK updated to: $(dotnet --version)"
+else
+    echo ".NET SDK is already at the latest version: $DOTNET_CURRENT"
+fi
+
+echo ""
+echo "=== Development Environment Update Complete ==="
